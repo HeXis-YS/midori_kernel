@@ -9,8 +9,8 @@ git config --global user.name "HeXis-YS"
 mkdir gki
 cd gki
 yes | repo init -u https://android.googlesource.com/kernel/manifest --depth=1
-cp ../kernel.xml .repo/manifests/
-yes | repo init -m kernel.xml --depth=1
+cp ../gki.xml .repo/manifests/
+yes | repo init -m gki.xml --depth=1
 
 # Sync repo
 repo sync -c --no-clone-bundle --no-tags -j$(($(nproc) * 2))
