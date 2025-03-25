@@ -1,0 +1,13 @@
+--- a/common/kernel/cpu.c	2025-03-25 09:04:25.704825839 +0000
++++ b/common/kernel/cpu.c	2025-03-25 09:06:08.621125283 +0000
+@@ -2781,9 +2781,7 @@
+ 	CPU_MITIGATIONS_AUTO_NOSMT,
+ };
+ 
+-static enum cpu_mitigations cpu_mitigations __ro_after_init =
+-	IS_ENABLED(CONFIG_CPU_MITIGATIONS) ? CPU_MITIGATIONS_AUTO :
+-					     CPU_MITIGATIONS_OFF;
++static enum cpu_mitigations cpu_mitigations __ro_after_init = CPU_MITIGATIONS_OFF;
+ 
+ static int __init mitigations_parse_cmdline(char *arg)
+ {
