@@ -1,3 +1,12 @@
+kasan_flag_enabled
 devm_tegra_memory_controller_get
 tegra_mc_probe_device
-kasan_flag_enabled
+__pkvm_load_el2_module
+__pkvm_register_el2_call
+gfn_to_pfn_memslot
+mmu_notifier_synchronize
+pkvm_iommu_driver_init
+pkvm_iommu_finalize
+pkvm_iommu_register
+pkvm_iommu_resume
+pkvm_iommu_suspend
