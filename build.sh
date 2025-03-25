@@ -29,5 +29,9 @@ patch -p1 < ../disable_mitigations.patch
 # tools/bazel run //common:kernel_aarch64_config -- menuconfig
 cp ../gki_defconfig common/arch/arm64/configs/gki_defconfig
 
+# Strip missing symbols
+grep -F -v -f ../strip_symbols common/android/abi_gki_aarch64_arg > stripped_abi && mv stripped_abi common/android/abi_gki_aarch64_arg
+grep -F -v -f ../strip_symbols common/android/abi_gki_aarch64_db845c > stripped_abi && mv stripped_abi common/android/abi_gki_aarch64_db845c
+
 # Build kernel images
 tools/bazel run --config=release --lto=full //common:kernel_aarch64_dist

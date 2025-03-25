@@ -1,0 +1,3 @@
+devm_tegra_memory_controller_get
+tegra_mc_probe_device
+kasan_flag_enabled
