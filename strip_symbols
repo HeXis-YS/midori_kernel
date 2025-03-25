@@ -10,3 +10,4 @@ pkvm_iommu_finalize
 pkvm_iommu_register
 pkvm_iommu_resume
 pkvm_iommu_suspend
+__stack_chk_fail
