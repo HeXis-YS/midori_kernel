@@ -26,9 +26,5 @@
   <project path="prebuilts/build-tools" name="platform/prebuilts/build-tools" clone-depth="1" revision="f6813860e16b2fa1461a15e7b8a3127dfdee021a" />
   <project path="prebuilts/kernel-build-tools" name="kernel/prebuilts/build-tools" clone-depth="1" revision="083e34d8c2c4239be4967172427268c267585951" />
   <project path="tools/mkbootimg" name="platform/system/tools/mkbootimg" revision="2208a03d874255af1e4eaf6cf7c156fe1dc98943" />
-  <project path="prebuilts/bazel/linux-x86_64" name="platform/prebuilts/bazel/linux-x86_64" clone-depth="1" revision="6162318e6458db65f94eed6671e302c3e894b1ac" />
-  <project path="prebuilts/jdk/jdk11" name="platform/prebuilts/jdk/jdk11" clone-depth="1" revision="2a2fb389233fcc4027625f7642087a09d6014fdf" />
   <project path="prebuilts/ndk-r23" name="toolchain/prebuilts/ndk/r23" clone-depth="1" revision="93532f3052c14fbb337ff57d5732128dc7481ee6" />
-  <project path="external/bazel-skylib" name="platform/external/bazel-skylib" revision="f1fb8167b4ed64feb494fd1ea6a8a619bbb549de" />
-  <project path="build/bazel_common_rules" name="platform/build/bazel_common_rules" revision="7a007ed2ff0d97eebf77977420f185c66698f7a3" />
 </manifest>
