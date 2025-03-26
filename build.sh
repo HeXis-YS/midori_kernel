@@ -30,7 +30,10 @@ rm common/android/gki_aarch64_modules
 touch common/android/gki_aarch64_modules
 
 # Strip missing ABI symbols
-grep -F -v -f ../strip_symbols common/android/abi_gki_aarch64_pixel > stripped_abi && mv stripped_abi common/android/abi_gki_aarch64_pixel
+for file in common/android/abi_gki_aarch64_*; do
+    echo "Stripping ABI symbols: $file"
+    grep -F -v -f ../strip_symbols $file > stripped_abi && mv stripped_abi $file
+done
 
 # Build kernel images
 GKI_KERNEL_CMDLINE="mitigations=off" LTO=full BUILD_CONFIG=common/build.config.gki.aarch64 build/build.sh
