@@ -37,4 +37,4 @@ for file in common/android/abi_gki_aarch64_*; do
 done
 
 # Build kernel images
-GKI_KERNEL_CMDLINE="mitigations=off" LTO=full BUILD_CONFIG=common/build.config.gki.aarch64 build/build.sh
+LTO=full BUILD_CONFIG=common/build.config.gki.aarch64 build/build.sh
