@@ -31,11 +31,14 @@ cp ../gki_defconfig common/arch/arm64/configs/gki_defconfig
 
 # Strip missing ABI symbols
 for file in common/android/abi_gki_aarch64_*; do
-  if [ -f "$file" ]; then
-    echo "Stripping ABI symbols: $file"
-    grep -F -v -f ../strip_symbols "$file" > "$file.tmp" && mv "$file.tmp" "$file"
-  fi
+  echo "Stripping ABI symbols: $file"
+  grep -F -v -f ../strip_symbols $file > stripped_list && mv stripped_list $file
 done
 
+# Static kernel
+grep -v "\.ko" common/modules.bzl > stripped_list && mv stripped_list common/modules.bzl
+sed -i '/cp $(find ${staging_dir} -type f -name "\*\.ko") ${staging_dir}\/flatten\/lib\/modules/d' build/kernel/build_utils.sh
+
 # Build kernel images
+# tools/bazel run --config=fast --lto=none //common:kernel_aarch64_dist
 tools/bazel run --config=release --lto=full //common:kernel_aarch64_dist
