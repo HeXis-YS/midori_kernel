@@ -30,6 +30,7 @@ rm common/android/gki_aarch64_modules
 touch common/android/gki_aarch64_modules
 
 # Strip missing ABI symbols
+grep -F -v -f ../strip_symbols common/android/abi_gki_aarch64 > stripped_abi && mv stripped_abi common/android/abi_gki_aarch64
 for file in common/android/abi_gki_aarch64_*; do
     echo "Stripping ABI symbols: $file"
     grep -F -v -f ../strip_symbols $file > stripped_abi && mv stripped_abi $file
