@@ -6,3 +6,4 @@ pkvm_iommu_resume
 pkvm_iommu_s2mpu_register
 pkvm_iommu_suspend
 pkvm_iommu_sysmmu_sync_register
+__stack_chk_fail
