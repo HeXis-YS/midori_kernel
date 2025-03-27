@@ -24,9 +24,10 @@ rm prebuilts/clang/host/linux-x86/clang-r510928/bin/clang.real
 cp ../gki-wrapper.py prebuilts/clang/host/linux-x86/clang-r510928/bin/clang.real
 
 # Setup custom defconfig
+# BUILD_CONFIG=common/build.config.gki.aarch64 build/config.sh
 cp ../gki_defconfig common/arch/arm64/configs/gki_defconfig
 rm common/android/gki_aarch64_modules
 touch common/android/gki_aarch64_modules
 
 # Build kernel images
-GKI_KERNEL_CMDLINE="mitigations=off" LTO=full BUILD_CONFIG=common/build.config.gki.aarch64 build/build.sh
+LTO=full BUILD_CONFIG=common/build.config.gki.aarch64 build/build.sh
