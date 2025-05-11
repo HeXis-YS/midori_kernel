@@ -3,7 +3,7 @@
   <remote name="aosp" fetch="https://android.googlesource.com/" review="https://android.googlesource.com/" />
   <default revision="master-kernel-build-2022" remote="aosp" sync-j="4" />
   <superproject name="kernel/superproject" remote="aosp" revision="common-android13-5.15-2024-07" />
-  <project path="build/kernel" name="kernel/build" revision="b05fb2e75ba86f934da7fbcb4435678a54645c5f">
+  <project path="build/kernel" name="kernel/build">
     <linkfile dest="tools/bazel" src="kleaf/bazel.sh" />
     <linkfile dest="WORKSPACE" src="kleaf/bazel.WORKSPACE" />
     <linkfile dest="build/build.sh" src="build.sh" />
@@ -17,14 +17,14 @@
     <linkfile dest="build/abi" src="abi" />
     <linkfile dest="build/static_analysis" src="static_analysis" />
   </project>
-  <project path="common" name="kernel/common" revision="bf9e707787b224331c4ca0b2715f7885eccbef71" upstream="android13-5.15-2024-07" dest-branch="android13-5.15-2024-07">
+  <project path="common" name="kernel/common" revision="android13-5.15-2024-07" upstream="android13-5.15-2024-07" dest-branch="android13-5.15-2024-07">
     <linkfile dest=".source_date_epoch_dir" src="." />
   </project>
-  <project path="kernel/configs" name="kernel/configs" revision="b3cc2bc03dab303c54a9ce1f709f8ee315eb311d" />
-  <project path="prebuilts/clang/host/linux-x86" name="platform/prebuilts/clang/host/linux-x86" clone-depth="1" revision="7061673283909f372f4938e45149d23bd10cbd40" />
-  <project path="prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8" name="platform/prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8" clone-depth="1" revision="007101a451907c5369db5002ddf7b14dcefb7864" />
-  <project path="prebuilts/build-tools" name="platform/prebuilts/build-tools" clone-depth="1" revision="f6813860e16b2fa1461a15e7b8a3127dfdee021a" />
-  <project path="prebuilts/kernel-build-tools" name="kernel/prebuilts/build-tools" clone-depth="1" revision="083e34d8c2c4239be4967172427268c267585951" />
-  <project path="tools/mkbootimg" name="platform/system/tools/mkbootimg" revision="2208a03d874255af1e4eaf6cf7c156fe1dc98943" />
-  <project path="prebuilts/ndk-r23" name="toolchain/prebuilts/ndk/r23" clone-depth="1" revision="93532f3052c14fbb337ff57d5732128dc7481ee6" />
+  <project path="kernel/configs" name="kernel/configs" revision="main" upstream="main" dest-branch="main" />
+  <project path="prebuilts/clang/host/linux-x86" name="platform/prebuilts/clang/host/linux-x86" clone-depth="1" revision="main-kernel-build-2024" />
+  <project path="prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8" name="platform/prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8" clone-depth="1" />
+  <project path="prebuilts/build-tools" name="platform/prebuilts/build-tools" clone-depth="1" />
+  <project path="prebuilts/kernel-build-tools" name="kernel/prebuilts/build-tools" clone-depth="1" />
+  <project path="tools/mkbootimg" name="platform/system/tools/mkbootimg" />
+  <project path="prebuilts/ndk-r23" name="toolchain/prebuilts/ndk/r23" clone-depth="1" />
 </manifest>
