@@ -17,10 +17,13 @@ popd
 rm -rf /tmp/gki
 mv gki /tmp/gki
 pushd /tmp/gki
-repo sync -c --no-clone-bundle --no-tags -j$(($(nproc) * 2))
+repo sync -c --no-clone-bundle -j$(($(nproc) * 2))
 popd
 mv /tmp/gki gki
 pushd gki
+
+# Disable dirty label
+sed -i -e 's/ -dirty//' common/scripts/setlocalversion
 
 # Setup KernelSU
 curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -

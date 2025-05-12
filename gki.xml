@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <manifest>
   <remote name="aosp" fetch="https://android.googlesource.com/" review="https://android.googlesource.com/" />
-  <default revision="master-kernel-build-2022" remote="aosp" sync-j="4" />
+  <default revision="master-kernel-build-2022" remote="aosp" clone-depth="1" sync-j="4" />
   <superproject name="kernel/superproject" remote="aosp" revision="common-android13-5.15-2024-07" />
   <project path="build/kernel" name="kernel/build">
     <linkfile dest="tools/bazel" src="kleaf/bazel.sh" />
@@ -17,14 +17,14 @@
     <linkfile dest="build/abi" src="abi" />
     <linkfile dest="build/static_analysis" src="static_analysis" />
   </project>
-  <project path="common" name="kernel/common" revision="android13-5.15-2024-07" upstream="android13-5.15-2024-07" dest-branch="android13-5.15-2024-07">
+  <project path="common" name="kernel/common" revision="refs/tags/android13-5.15-2024-07_r2">
     <linkfile dest=".source_date_epoch_dir" src="." />
   </project>
-  <project path="kernel/configs" name="kernel/configs" revision="main" upstream="main" dest-branch="main" />
-  <project path="prebuilts/clang/host/linux-x86" name="platform/prebuilts/clang/host/linux-x86" clone-depth="1" revision="main-kernel-build-2024" />
-  <project path="prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8" name="platform/prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8" clone-depth="1" />
-  <project path="prebuilts/build-tools" name="platform/prebuilts/build-tools" clone-depth="1" />
-  <project path="prebuilts/kernel-build-tools" name="kernel/prebuilts/build-tools" clone-depth="1" />
+  <project path="kernel/configs" name="kernel/configs" revision="main" />
+  <project path="prebuilts/clang/host/linux-x86" name="platform/prebuilts/clang/host/linux-x86" revision="main-kernel-build-2024" />
+  <project path="prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8" name="platform/prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8" />
+  <project path="prebuilts/build-tools" name="platform/prebuilts/build-tools" />
+  <project path="prebuilts/kernel-build-tools" name="kernel/prebuilts/build-tools" />
   <project path="tools/mkbootimg" name="platform/system/tools/mkbootimg" />
-  <project path="prebuilts/ndk-r23" name="toolchain/prebuilts/ndk/r23" clone-depth="1" />
+  <project path="prebuilts/ndk-r23" name="toolchain/prebuilts/ndk/r23" />
 </manifest>
