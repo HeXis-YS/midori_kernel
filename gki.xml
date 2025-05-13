@@ -26,5 +26,5 @@
   <project path="prebuilts/build-tools" name="platform/prebuilts/build-tools" />
   <project path="prebuilts/kernel-build-tools" name="kernel/prebuilts/build-tools" />
   <project path="tools/mkbootimg" name="platform/system/tools/mkbootimg" />
-  <project path="prebuilts/ndk-r23" name="toolchain/prebuilts/ndk/r23" />
+  <project path="prebuilts/ndk-r23" name="toolchain/prebuilts/ndk/r26" revision="main-kernel-build-2024" />
 </manifest>
