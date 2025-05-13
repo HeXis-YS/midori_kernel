@@ -11,16 +11,9 @@ pushd gki
 yes | repo init -u https://android.googlesource.com/kernel/manifest --depth=1
 cp ../gki.xml .repo/manifests/
 yes | repo init -m gki.xml --depth=1
-popd
 
 # Sync repo
-rm -rf /tmp/gki
-mv gki /tmp/gki
-pushd /tmp/gki
 repo sync -c --no-clone-bundle -j9
-popd
-mv /tmp/gki gki
-pushd gki
 
 # Disable dirty label
 sed -i -e 's/ -dirty//' common/scripts/setlocalversion
