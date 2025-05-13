@@ -21,7 +21,10 @@
     <linkfile dest=".source_date_epoch_dir" src="." />
   </project>
   <project path="kernel/configs" name="kernel/configs" revision="main" />
-  <project path="prebuilts/clang/host/linux-x86" name="platform/prebuilts/clang/host/linux-x86" revision="main-kernel-build-2024" />
+  <project path="prebuilts/clang/host/linux-x86" name="platform/prebuilts/clang/host/linux-x86" revision="main-kernel-build-2024">
+    <linkfile dest="prebuilts/clang/host/linux-x86/current" src="clang-r510928" />
+    <linkfile dest="prebuilts/clang/host/linux-x86/clang-r450784e" src="clang-r510928" />
+  </project>
   <project path="prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8" name="platform/prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8" />
   <project path="prebuilts/build-tools" name="platform/prebuilts/build-tools" />
   <project path="prebuilts/kernel-build-tools" name="kernel/prebuilts/build-tools" />

@@ -10,7 +10,7 @@ class CompilerWrapper():
 
     def set_real_compiler(self):
         compiler_path = os.path.dirname(os.path.abspath(__file__))
-        self.real_compiler = os.path.join(compiler_path, "clang-18")
+        self.real_compiler = os.path.join(compiler_path, "@REAL_COMPILER@")
 
     def parse_custom_flags(self):
         if not "-O0" in self.args:
@@ -22,8 +22,8 @@ class CompilerWrapper():
         self.set_real_compiler()
         self.parse_custom_flags()
         execargs = [self.argv0] + self.args
-        with open("/home/runner/log", "a") as log_file:
-            log_file.write(' '.join(execargs) + '\n')
+        # with open("/home/runner/log", "a") as log_file:
+        #     log_file.write(' '.join(execargs) + '\n')
         os.execv(self.real_compiler, execargs)
 
 

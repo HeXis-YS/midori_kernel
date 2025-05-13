@@ -28,10 +28,11 @@ sed -i -e 's/ -dirty//' common/scripts/setlocalversion
 # Setup KernelSU
 curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
 
-# Setup custom toolchain
-sed -i -e 's/r450784e/r510928/' common/build.config.constants
-rm prebuilts/clang/host/linux-x86/clang-r510928/bin/clang.real
-cp ../gki-wrapper.py prebuilts/clang/host/linux-x86/clang-r510928/bin/clang.real
+# Setup compiler wrapper
+REAL_COMPILER=$(basename $(readlink prebuilts/clang/host/linux-x86/current/bin/clang.real))
+rm prebuilts/clang/host/linux-x86/current/bin/clang.real
+sed -e "s/@REAL_COMPILER@/$REAL_COMPILER/" ../gki-wrapper.py > prebuilts/clang/host/linux-x86/current/bin/clang.real
+chmod 755 prebuilts/clang/host/linux-x86/current/bin/clang.real
 
 # Setup custom defconfig
 # BUILD_CONFIG=common/build.config.gki.aarch64 build/config.sh
