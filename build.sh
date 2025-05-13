@@ -17,7 +17,7 @@ popd
 rm -rf /tmp/gki
 mv gki /tmp/gki
 pushd /tmp/gki
-repo sync -c --no-clone-bundle -j$(($(nproc) * 2))
+repo sync -c --no-clone-bundle -j9
 popd
 mv /tmp/gki gki
 pushd gki
