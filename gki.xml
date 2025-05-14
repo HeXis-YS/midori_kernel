@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <manifest>
   <remote name="aosp" fetch="https://android.googlesource.com/" review="https://android.googlesource.com/" />
-  <default revision="master-kernel-build-2022" remote="aosp" clone-depth="1" sync-j="4" />
+  <default revision="main-kernel-build-2024" remote="aosp" clone-depth="1" sync-j="4" />
   <superproject name="kernel/superproject" remote="aosp" revision="common-android13-5.15-2024-07" />
-  <project path="build/kernel" name="kernel/build">
+  <project path="build/kernel" name="kernel/build" revision="master-kernel-build-2022">
     <linkfile dest="tools/bazel" src="kleaf/bazel.sh" />
     <linkfile dest="WORKSPACE" src="kleaf/bazel.WORKSPACE" />
     <linkfile dest="build/build.sh" src="build.sh" />
@@ -21,7 +21,7 @@
     <linkfile dest=".source_date_epoch_dir" src="." />
   </project>
   <project path="kernel/configs" name="kernel/configs" revision="main" />
-  <project path="prebuilts/clang/host/linux-x86" name="platform/prebuilts/clang/host/linux-x86" revision="main-kernel-build-2024">
+  <project path="prebuilts/clang/host/linux-x86" name="platform/prebuilts/clang/host/linux-x86">
     <linkfile dest="prebuilts/clang/host/linux-x86/current" src="clang-r510928" />
     <linkfile dest="prebuilts/clang/host/linux-x86/clang-r450784e" src="clang-r510928" />
   </project>
@@ -29,5 +29,5 @@
   <project path="prebuilts/build-tools" name="platform/prebuilts/build-tools" />
   <project path="prebuilts/kernel-build-tools" name="kernel/prebuilts/build-tools" />
   <project path="tools/mkbootimg" name="platform/system/tools/mkbootimg" />
-  <project path="prebuilts/ndk-r23" name="toolchain/prebuilts/ndk/r26" revision="main-kernel-build-2024" />
+  <project path="prebuilts/ndk-r23" name="toolchain/prebuilts/ndk/r26" />
 </manifest>
