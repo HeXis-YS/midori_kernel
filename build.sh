@@ -32,8 +32,13 @@ chmod 755 prebuilts/clang/host/linux-x86/current/bin/clang.real
 cp ../gki_defconfig common/arch/arm64/configs/gki_defconfig
 truncate -s 0 common/android/gki_aarch64_modules
 
+# CCACHE
+sudo apt install -y ccache
+ccache -M 10G -o cache_dir=/mnt/ccache
+# ccache -X 22 --recompress-threads $(($(nproc)+1))
+
 # Build kernel images
-LTO=full BUILD_CONFIG=common/build.config.gki.aarch64 build/build.sh
+LTO=full BUILD_CONFIG=common/build.config.gki.aarch64 build/build.sh CC="$(which ccache) clang"
 popd
 
 cp gki/out/android13-5.15/dist/boot.img ./
