@@ -22,10 +22,10 @@ sed -i -e 's/ -dirty//' common/scripts/setlocalversion
 curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
 
 # Setup compiler wrapper
-REAL_COMPILER=$(basename $(readlink prebuilts/clang/host/linux-x86/current/bin/clang.real))
-rm prebuilts/clang/host/linux-x86/current/bin/clang.real
-sed -e "s/@REAL_COMPILER@/$REAL_COMPILER/" ../gki-wrapper.py > prebuilts/clang/host/linux-x86/current/bin/clang.real
-chmod 755 prebuilts/clang/host/linux-x86/current/bin/clang.real
+pushd prebuilts/clang/host/linux-x86/clang-r450784e/bin
+mv clang.real clang.real_
+popd
+install -m 755 ../gki-wrapper.py prebuilts/clang/host/linux-x86/clang-r450784e/bin/clang.real
 
 # Setup custom defconfig
 # BUILD_CONFIG=common/build.config.gki.aarch64 build/config.sh
