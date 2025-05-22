@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <manifest>
   <remote name="aosp" fetch="https://android.googlesource.com/" review="https://android.googlesource.com/" />
-  <default revision="main-kernel" remote="aosp" clone-depth="1" sync-j="9" />
+  <default revision="main-kernel-build-2024" remote="aosp" clone-depth="1" sync-j="9" />
   <superproject name="kernel/superproject" remote="aosp" revision="common-android13-5.15-2024-07" />
   <project path="build/kernel" name="kernel/build" revision="master-kernel-build-2022">
     <linkfile dest="tools/bazel" src="kleaf/bazel.sh" />
@@ -22,12 +22,10 @@
   </project>
   <project path="kernel/configs" name="kernel/configs" revision="main" />
   <project path="prebuilts/clang/host/linux-x86" name="platform/prebuilts/clang/host/linux-x86">
-    <linkfile dest="prebuilts/clang/host/linux-x86/clang-r450784e" src="clang-r563880" />
+    <linkfile dest="prebuilts/clang/host/linux-x86/clang-r450784e" src="clang-r510928" />
   </project>
   <project path="prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8" name="platform/prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8" />
-  <project path="prebuilts/build-tools" name="platform/prebuilts/build-tools">
-      <linkfile dest="prebuilts/kernel-build-tools/linux-x86/bin/soong_zip" src="linux-x86/bin/soong_zip" />
-  </project>
+  <project path="prebuilts/build-tools" name="platform/prebuilts/build-tools" />
   <project path="prebuilts/kernel-build-tools" name="kernel/prebuilts/build-tools" />
   <project path="tools/mkbootimg" name="platform/system/tools/mkbootimg" />
   <project path="prebuilts/ndk-r23" name="toolchain/prebuilts/ndk/r26" />
