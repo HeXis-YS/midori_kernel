@@ -15,22 +15,25 @@ yes | repo init -m gki.xml --depth=1
 # Sync repo
 repo sync -c --no-clone-bundle -j9
 
+# Setup KernelSU
+curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
+
 # Disable dirty label
 sed -i -e 's/ -dirty//' common/scripts/setlocalversion
 
-# Setup KernelSU
-curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
+# Set default zstd level to 1
+sed -i -e 's/#define ZSTD_DEF_LEVEL	3/#define ZSTD_DEF_LEVEL	1/g' common/crypto/zstd.c
+
+# Setup custom defconfig
+# BUILD_CONFIG=common/build.config.gki.aarch64 build/config.sh
+cp ../gki_defconfig common/arch/arm64/configs/gki_defconfig
+truncate -s 0 common/android/gki_aarch64_modules
 
 # Setup compiler wrapper
 pushd prebuilts/clang/host/linux-x86/clang-r450784e/bin
 mv clang.real clang.real_
 popd
 install -m 755 ../gki-wrapper.py prebuilts/clang/host/linux-x86/clang-r450784e/bin/clang.real
-
-# Setup custom defconfig
-# BUILD_CONFIG=common/build.config.gki.aarch64 build/config.sh
-cp ../gki_defconfig common/arch/arm64/configs/gki_defconfig
-truncate -s 0 common/android/gki_aarch64_modules
 
 # CCACHE
 sudo apt install -y ccache
