@@ -57,6 +57,7 @@ CONFIG_SCHED_MC=y
 CONFIG_NR_CPUS=32
 CONFIG_HZ_1000=y
 CONFIG_PARAVIRT_TIME_ACCOUNTING=y
+# CONFIG_MITIGATE_SPECTRE_BRANCH_HISTORY is not set
 CONFIG_ARM64_SW_TTBR0_PAN=y
 CONFIG_COMPAT=y
 CONFIG_ARMV8_DEPRECATED=y
@@ -66,7 +67,7 @@ CONFIG_SETEND_EMULATION=y
 CONFIG_ARM64_MPAM=y
 CONFIG_RANDOMIZE_BASE=y
 # CONFIG_RANDOMIZE_MODULE_REGION_FULL is not set
-CONFIG_CMDLINE="stack_depot_disable=on kasan.stacktrace=off kvm-arm.mode=protected cgroup_disable=pressure"
+CONFIG_CMDLINE="stack_depot_disable=on kasan.stacktrace=off kvm-arm.mode=protected cgroup_disable=pressure mitigations=off"
 CONFIG_CMDLINE_EXTEND=y
 # CONFIG_DMI is not set
 CONFIG_HIBERNATION=y
