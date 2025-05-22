@@ -30,5 +30,5 @@
   </project>
   <project path="prebuilts/kernel-build-tools" name="kernel/prebuilts/build-tools" />
   <project path="tools/mkbootimg" name="platform/system/tools/mkbootimg" />
-  <project path="prebuilts/ndk-r23" name="toolchain/prebuilts/ndk/r27" />
+  <project path="prebuilts/ndk-r23" name="toolchain/prebuilts/ndk/r26" />
 </manifest>
