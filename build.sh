@@ -35,13 +35,8 @@ mv clang.real clang.real_
 popd
 install -m 755 ../gki-wrapper.py prebuilts/clang/host/linux-x86/clang-r450784e/bin/clang.real
 
-# CCACHE
-sudo apt install -y ccache
-ccache -M 10G -o cache_dir=/mnt/ccache
-# ccache -X 22 --recompress-threads $(($(nproc)+1))
-
 # Build kernel images
-LTO=full BUILD_CONFIG=common/build.config.gki.aarch64 build/build.sh CC="$(which ccache) clang"
+LTO=full BUILD_CONFIG=common/build.config.gki.aarch64 build/build.sh
 popd
 
 cp gki/out/android13-5.15/dist/boot.img ./
