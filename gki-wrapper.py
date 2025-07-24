@@ -10,7 +10,7 @@ class CompilerWrapper():
 
     def set_real_compiler(self):
         compiler_path = os.path.dirname(os.path.abspath(__file__))
-        self.real_compiler = os.path.join(compiler_path, "clang.real_")
+        self.real_compiler = os.path.join(compiler_path, "clang-real_")
 
     def parse_custom_flags(self):
         if not "-O0" in self.args:
