@@ -1,9 +1,13 @@
 #!/usr/bin/bash
+set -e
+
 # Setup repo
-wget -O /usr/local/bin/repo https://storage.googleapis.com/git-repo-downloads/repo
-chmod a+x /usr/local/bin/repo
-git config --global user.email "40174982+HeXis-YS@users.noreply.github.com"
-git config --global user.name "HeXis-YS"
+if [ ! -f /usr/local/bin/repo ]; then
+    wget -O /usr/local/bin/repo https://storage.googleapis.com/git-repo-downloads/repo
+    chmod +x /usr/local/bin/repo
+    git config --global user.email "40174982+HeXis-YS@users.noreply.github.com"
+    git config --global user.name "HeXis-YS"
+fi
 
 # Setup GKI manifests
 mkdir gki
@@ -15,9 +19,6 @@ yes | repo init -m gki.xml --depth=1
 # Sync repo
 repo sync -c --no-clone-bundle -j9
 
-# Setup KernelSU
-curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
-
 # Disable dirty label
 sed -i -e 's/ -dirty//' common/scripts/setlocalversion
 
@@ -28,6 +29,9 @@ sed -i -e 's/#define ZSTD_DEF_LEVEL	3/#define ZSTD_DEF_LEVEL	1/g' common/crypto/
 cp ../gki_defconfig common/arch/arm64/configs/gki_defconfig
 truncate -s 0 common/android/gki_aarch64_modules
 # BUILD_CONFIG=common/build.config.gki.aarch64 build/config.sh
+
+# Setup KernelSU
+curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
 
 # Setup compiler wrapper
 pushd prebuilts/clang/host/linux-x86/clang-r450784e/bin
