@@ -50,5 +50,7 @@ cp gki/out/android13-5.15/dist/boot.img ./
 # Repack system_dlkm.img
 export PATH=$(realpath gki/prebuilts/kernel-build-tools/linux-x86/bin):$PATH
 cp -r etc gki/out/android13-5.15/staging/system_dlkm_staging/
+touch gki/out/android13-5.15/staging/system_dlkm_staging/etc/fs_config_dirs
+touch gki/out/android13-5.15/staging/system_dlkm_staging/etc/fs_config_files
 build_image gki/out/android13-5.15/staging/system_dlkm_staging system_dlkm_props_file system_dlkm.img /dev/null
 avbtool add_hashtree_footer --partition_name system_dlkm --hash_algorithm sha256 --image system_dlkm.img
