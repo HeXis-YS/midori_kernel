@@ -1,4 +1,5 @@
 #!/usr/bin/bash -e
+REPO_DIR="$(dirname "$(realpath "$0")")"
 
 # Setup repo
 if [ ! -f /usr/local/bin/repo ]; then
@@ -19,28 +20,51 @@ popd
 
 # Setup GKI manifests
 yes | repo init -u https://android.googlesource.com/kernel/manifest --depth=1
-cp ../gki.xml .repo/manifests/
+cp $REPO_DIR/gki.xml .repo/manifests/
 yes | repo init -m gki.xml --depth=1
 
 # Sync repo
 repo sync -c --no-clone-bundle -j8
 
+pushd common
+
 # Pretend version
-sed -i 's/^SUBLEVEL = .*/SUBLEVEL = 170/' common/Makefile
-echo "-android13-8-g52ccd9134339" > common/.scmversion
+sed -i 's/^SUBLEVEL = .*/SUBLEVEL = 170/' Makefile
+echo "-android13-8-g52ccd9134339" > .scmversion
 
 # Set default zstd level to 1
-sed -i 's/^#define ZSTD_DEF_LEVEL.*/#define ZSTD_DEF_LEVEL 1/' common/crypto/zstd.c
+sed -i 's/^#define ZSTD_DEF_LEVEL.*/#define ZSTD_DEF_LEVEL 1/' crypto/zstd.c
+
+# Lock CPU freq
+patch -p1 -N <<'EOF'
+diff --git a/include/linux/cpufreq.h b/include/linux/cpufreq.h
+index 4b4fbf4cf..860d7da07 100644
+--- a/include/linux/cpufreq.h
++++ b/include/linux/cpufreq.h
+@@ -464,8 +464,8 @@ static inline void cpufreq_verify_within_limits(struct cpufreq_policy_data *poli
+ static inline void
+ cpufreq_verify_within_cpu_limits(struct cpufreq_policy_data *policy)
+ {
+-	cpufreq_verify_within_limits(policy, policy->cpuinfo.min_freq,
+-				     policy->cpuinfo.max_freq);
++	policy->min = policy->cpuinfo.min_freq;
++	policy->max = policy->cpuinfo.max_freq;
+ }
+ 
+ #ifdef CONFIG_CPU_FREQ
+EOF
 
 # Setup custom defconfig
-cp ../gki_defconfig common/arch/arm64/configs/gki_defconfig
-truncate -s 0 common/android/gki_aarch64_modules
+cp $REPO_DIR/gki_defconfig arch/arm64/configs/gki_defconfig
+truncate -s 0 android/gki_aarch64_modules
+
+popd # common
 
 # Setup KernelSU
 curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
 
 # Setup Re:Kernel
-../rekernel.sh
+$REPO_DIR/rekernel.sh
 
 # Waiting for the compiler download to complete
 wait
@@ -48,21 +72,22 @@ wait
 # Setup compiler wrapper
 pushd prebuilts/clang/host/linux-x86/clang-r450784e/bin
 mv clang-real clang-real_
+install -m 755 $REPO_DIR/gki-wrapper.py clang-real
 popd
-install -m 755 ../gki-wrapper.py prebuilts/clang/host/linux-x86/clang-r450784e/bin/clang-real
 
 # Build kernel images
 # BUILD_CONFIG=common/build.config.gki.aarch64 build/config.sh
 LTO=full BUILD_CONFIG=common/build.config.gki.aarch64 build/build.sh
 
-popd # gki
-
-cp gki/out/android13-5.15/dist/boot.img ./
+cp out/android13-5.15/dist/boot.img $REPO_DIR/
 
 # Repack system_dlkm.img
-export PATH=$(realpath gki/prebuilts/kernel-build-tools/linux-x86/bin):$PATH
-cp -r etc gki/out/android13-5.15/staging/system_dlkm_staging/
-touch gki/out/android13-5.15/staging/system_dlkm_staging/etc/fs_config_dirs
-touch gki/out/android13-5.15/staging/system_dlkm_staging/etc/fs_config_files
+export PATH=$(realpath prebuilts/kernel-build-tools/linux-x86/bin):$PATH
+pushd out/android13-5.15/staging/system_dlkm_staging
+cp -r $REPO_DIR/etc ./
+touch etc/fs_config_dirs etc/fs_config_files
+popd # out/android13-5.15/staging/system_dlkm_staging
+popd # gki
+
 build_image gki/out/android13-5.15/staging/system_dlkm_staging system_dlkm_props_file system_dlkm.img /dev/null
 avbtool add_hashtree_footer --partition_name system_dlkm --hash_algorithm sha256 --image system_dlkm.img
