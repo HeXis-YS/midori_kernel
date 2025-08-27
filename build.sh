@@ -8,15 +8,22 @@ if [ ! -f /usr/local/bin/repo ]; then
     git config --global user.name "HeXis-YS"
 fi
 
-# Setup GKI manifests
 mkdir gki
 pushd gki
+
+# Download compiler first
+mkdir -p prebuilts/clang/host/linux-x86/clang-r450784e
+pushd prebuilts/clang/host/linux-x86/clang-r450784e
+wget -qO- https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/4d2864f08ff2c290563fb903a5156e0504620bbe/clang-r563880c.tar.gz | tar -xzf- &
+popd
+
+# Setup GKI manifests
 yes | repo init -u https://android.googlesource.com/kernel/manifest --depth=1
 cp ../gki.xml .repo/manifests/
 yes | repo init -m gki.xml --depth=1
 
 # Sync repo
-repo sync -c --no-clone-bundle -j9
+repo sync -c --no-clone-bundle -j8
 
 # Disable dirty label
 sed -i -e 's/ -dirty//' common/scripts/setlocalversion
@@ -34,6 +41,9 @@ curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh
 # Setup Re:Kernel
 ../rekernel.sh
 
+# Waiting for the compiler download to complete
+wait
+
 # Setup compiler wrapper
 pushd prebuilts/clang/host/linux-x86/clang-r450784e/bin
 mv clang-real clang-real_
@@ -43,7 +53,8 @@ install -m 755 ../gki-wrapper.py prebuilts/clang/host/linux-x86/clang-r450784e/b
 # Build kernel images
 # BUILD_CONFIG=common/build.config.gki.aarch64 build/config.sh
 LTO=full BUILD_CONFIG=common/build.config.gki.aarch64 build/build.sh
-popd
+
+popd # gki
 
 cp gki/out/android13-5.15/dist/boot.img ./
 
