@@ -25,11 +25,12 @@ yes | repo init -m gki.xml --depth=1
 # Sync repo
 repo sync -c --no-clone-bundle -j8
 
-# Disable dirty label
-sed -i -e 's/ -dirty//' common/scripts/setlocalversion
+# Pretend version
+sed -i 's/^SUBLEVEL = .*/SUBLEVEL = 170/' common/Makefile
+echo "-android13-8-g52ccd9134339" > common/.scmversion
 
 # Set default zstd level to 1
-sed -i -e 's/#define ZSTD_DEF_LEVEL	3/#define ZSTD_DEF_LEVEL	1/g' common/crypto/zstd.c
+sed -i 's/^#define ZSTD_DEF_LEVEL.*/#define ZSTD_DEF_LEVEL 1/' common/crypto/zstd.c
 
 # Setup custom defconfig
 cp ../gki_defconfig common/arch/arm64/configs/gki_defconfig
