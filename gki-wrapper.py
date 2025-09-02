@@ -17,6 +17,7 @@ class CompilerWrapper():
             self.args += ["-O3"]
         if "--target=aarch64-linux-gnu" in self.args:
             self.args += ["-mcpu=cortex-x3", "-mtune=cortex-a510"]
+        self.args += ["-w"]
 
     def invoke_compiler(self):
         self.set_real_compiler()
