@@ -24,7 +24,7 @@ cp $REPO_DIR/gki.xml .repo/manifests/
 yes | repo init -m gki.xml --depth=1
 
 # Sync repo
-repo sync -c --no-clone-bundle -j8
+repo sync -c --no-tags --no-clone-bundle -j8
 
 pushd common
 

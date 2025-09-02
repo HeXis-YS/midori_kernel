@@ -17,7 +17,7 @@
     <linkfile dest="build/abi" src="abi" />
     <linkfile dest="build/static_analysis" src="static_analysis" />
   </project>
-  <project path="common" name="kernel/common" revision="refs/tags/android13-5.15-2025-01_r6">
+  <project path="common" name="kernel/common" revision="android13-5.15-2025-01">
     <linkfile dest=".source_date_epoch_dir" src="." />
   </project>
   <project path="kernel/configs" name="kernel/configs" revision="main" />
