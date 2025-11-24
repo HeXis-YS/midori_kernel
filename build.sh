@@ -3,7 +3,7 @@ REPO_DIR="$(dirname "$(realpath "$0")")"
 
 # Setup repo
 if [ ! -f /usr/local/bin/repo ]; then
-    wget -O /usr/local/bin/repo https://storage.googleapis.com/git-repo-downloads/repo
+    curl -fsSLo /usr/local/bin/repo https://storage.googleapis.com/git-repo-downloads/repo
     chmod +x /usr/local/bin/repo
     git config --global user.email "40174982+HeXis-YS@users.noreply.github.com"
     git config --global user.name "HeXis-YS"
@@ -15,7 +15,7 @@ pushd gki
 # Download compiler first
 mkdir -p prebuilts/clang/host/linux-x86/clang-r450784e
 pushd prebuilts/clang/host/linux-x86/clang-r450784e
-wget -qO- https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/ebcc6c3bef363bc539ea39f45b6abae1dce6ff1a/clang-r574158.tar.gz | tar -xzf- &
+curl -fsSL https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/ebcc6c3bef363bc539ea39f45b6abae1dce6ff1a/clang-r574158.tar.gz | tar -xzf- &
 popd
 
 # Setup GKI manifests
@@ -61,7 +61,7 @@ truncate -s 0 android/gki_aarch64_modules
 popd # common
 
 # Setup KernelSU
-curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
+curl -fsSL "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
 
 # Setup Re:Kernel
 $REPO_DIR/rekernel.sh
