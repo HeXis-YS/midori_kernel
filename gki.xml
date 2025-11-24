@@ -2,7 +2,7 @@
 <manifest>
   <remote name="aosp" fetch="https://android.googlesource.com/" review="https://android.googlesource.com/" />
   <default revision="main-kernel-2025" remote="aosp" clone-depth="1" sync-j="8" />
-  <superproject name="kernel/superproject" remote="aosp" revision="common-android13-5.15-2024-07" />
+  <superproject name="kernel/superproject" remote="aosp" revision="common-android13-5.15-2025-01" />
   <project path="build/kernel" name="kernel/build" revision="master-kernel-build-2022">
     <linkfile dest="tools/bazel" src="kleaf/bazel.sh" />
     <linkfile dest="WORKSPACE" src="kleaf/bazel.WORKSPACE" />
