@@ -15,7 +15,8 @@ pushd gki
 # Download compiler first
 mkdir -p prebuilts/clang/host/linux-x86/clang-r450784e
 pushd prebuilts/clang/host/linux-x86/clang-r450784e
-curl -fsSL https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/ebcc6c3bef363bc539ea39f45b6abae1dce6ff1a/clang-r574158.tar.gz | tar -xzf- &
+CLANG_LATEST=$(curl -fsSL https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+/refs/heads/main-kernel/?format=TEXT | base64 -d | grep clang-r | awk 'END {print $NF}')
+curl -fsSL https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/main-kernel/${CLANG_LATEST}.tar.gz | tar -xzf- &
 popd
 
 # Setup GKI manifests
