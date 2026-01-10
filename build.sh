@@ -30,7 +30,9 @@ repo sync -c --no-tags --no-clone-bundle -j8
 pushd common
 
 # Pretend version
-sed -i 's/^SUBLEVEL = .*/SUBLEVEL = 170/' Makefile
+sed -i Makefile \
+    -e 's/^SUBLEVEL = .*/SUBLEVEL = 170/' \
+    -e 's/^\(KBUILD_LDFLAGS += -mllvm -import-instr-limit=5\)/# \1/'
 echo "-android13-8-g52ccd9134339" > .scmversion
 
 # Set default zstd level to 1
