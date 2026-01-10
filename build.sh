@@ -32,7 +32,8 @@ pushd common
 # Pretend version
 sed -i Makefile \
     -e 's/^SUBLEVEL = .*/SUBLEVEL = 170/' \
-    -e 's/^\(KBUILD_LDFLAGS += -mllvm -import-instr-limit=5\)/# \1/'
+    -e 's/^\(KBUILD_LDFLAGS += -mllvm -import-instr-limit=5\)/# \1/' \
+    -e 's/^\(KBUILD_CFLAGS += -mno-global-merge\)/# \1/'
 echo "-android13-8-g52ccd9134339" > .scmversion
 
 # Set default zstd level to 1
