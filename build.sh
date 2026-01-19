@@ -1,6 +1,11 @@
 #!/usr/bin/bash -e
 REPO_DIR="$(dirname "$(realpath "$0")")"
 
+rm -rf gki
+
+if [ -f gki.tar.zst ]; then
+    tar --zstd -xf gki.tar.zst
+else
 # Setup repo
 if [ ! -f /usr/local/bin/repo ]; then
     curl -fsSLo /usr/local/bin/repo https://storage.googleapis.com/git-repo-downloads/repo
@@ -14,10 +19,8 @@ pushd gki
 
 # Download compiler first
 mkdir -p prebuilts/clang/host/linux-x86/clang-r450784e
-pushd prebuilts/clang/host/linux-x86/clang-r450784e
 CLANG_LATEST=$(curl -fsSL https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+/refs/heads/main-kernel/?format=TEXT | base64 -d | grep clang-r | awk 'END {print $NF}')
-curl -fsSL https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/main-kernel/${CLANG_LATEST}.tar.gz | tar -xzf- &
-popd
+curl -fsSL https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/main-kernel/${CLANG_LATEST}.tar.gz | tar -C prebuilts/clang/host/linux-x86/clang-r450784e -xzf- &
 
 # Setup GKI manifests
 yes | repo init -u https://android.googlesource.com/kernel/manifest --depth=1
@@ -58,8 +61,6 @@ index 4b4fbf4cf..860d7da07 100644
  #ifdef CONFIG_CPU_FREQ
 EOF
 
-# Setup custom defconfig
-cp $REPO_DIR/gki_defconfig arch/arm64/configs/gki_defconfig
 truncate -s 0 android/gki_aarch64_modules
 
 popd # common
@@ -69,9 +70,17 @@ curl -fsSL "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.s
 
 # Setup Re:Kernel
 $REPO_DIR/rekernel.sh
+popd # gki
 
 # Waiting for the compiler download to complete
 wait
+tar -cf- gki | zstd -3 -T0 -o gki.tar.zst
+
+fi
+
+pushd gki
+# Setup custom defconfig
+cp $REPO_DIR/gki_defconfig common/arch/arm64/configs/gki_defconfig
 
 # Setup compiler wrapper
 pushd prebuilts/clang/host/linux-x86/clang-r450784e/bin
