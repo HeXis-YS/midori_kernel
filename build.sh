@@ -43,22 +43,26 @@ echo "-android13-8-g52ccd9134339" > .scmversion
 sed -i 's/^#define ZSTD_DEF_LEVEL.*/#define ZSTD_DEF_LEVEL 1/' crypto/zstd.c
 
 # Lock CPU freq
-patch -p1 -N <<'EOF'
-diff --git a/include/linux/cpufreq.h b/include/linux/cpufreq.h
-index 4b4fbf4cf..860d7da07 100644
+patch -p1 -N << EOF
 --- a/include/linux/cpufreq.h
 +++ b/include/linux/cpufreq.h
-@@ -464,8 +464,8 @@ static inline void cpufreq_verify_within_limits(struct cpufreq_policy_data *poli
- static inline void
- cpufreq_verify_within_cpu_limits(struct cpufreq_policy_data *policy)
+@@ -448,16 +448,11 @@ static inline void cpufreq_verify_within_limits(struct cpufreq_policy_data *poli
+ 						unsigned int min,
+ 						unsigned int max)
  {
--	cpufreq_verify_within_limits(policy, policy->cpuinfo.min_freq,
--				     policy->cpuinfo.max_freq);
-+	policy->min = policy->cpuinfo.min_freq;
-+	policy->max = policy->cpuinfo.max_freq;
+-	if (policy->min < min)
+-		policy->min = min;
++	policy->min = min;
+ 	if (policy->max < min)
+ 		policy->max = min;
+-	if (policy->min > max)
+-		policy->min = max;
+ 	if (policy->max > max)
+ 		policy->max = max;
+-	if (policy->min > policy->max)
+-		policy->min = policy->max;
+ 	return;
  }
- 
- #ifdef CONFIG_CPU_FREQ
 EOF
 
 truncate -s 0 android/gki_aarch64_modules
