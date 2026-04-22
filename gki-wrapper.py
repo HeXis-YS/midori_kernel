@@ -17,9 +17,8 @@ class CompilerWrapper():
             self.args += ["-O3"]
         if "--target=aarch64-linux-gnu" in self.args:
             self.args += ["-march=armv9-a+crypto+nosve+bf16+fp16fml+i8mm+memtag+pmuv3+profile", "-mtune=cortex-a510"]
-        self.args += ["-fivopts"]
-        self.args += ["-mllvm=-polly", "-mllvm=-polly-ast-use-context", "-mllvm=-polly-invariant-load-hoisting", "-mllvm=-polly-loopfusion-greedy", "-mllvm=-polly-run-inliner", "-mllvm=-polly-vectorizer=stripmine"]
-        self.args += ["-mllvm=-polly-run-dce"]
+        self.args += ["-mllvm=-polly", "-mllvm=-polly-ast-use-context", "-mllvm=-polly-invariant-load-hoisting", "-mllvm=-polly-loopfusion-greedy", "-mllvm=-polly-run-inliner", "-mllvm=-polly-vectorizer=stripmine", "-mllvm=-polly-run-dce"]
+        self.args += ["-Wno-error", "-Wno-unused-command-line-argument"]
 
     def invoke_compiler(self):
         self.set_real_compiler()
