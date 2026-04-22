@@ -30,6 +30,16 @@ yes | repo init -m gki.xml --depth=1
 # Sync repo
 repo sync -c --no-tags --no-clone-bundle -j8
 
+popd # gki
+
+# Waiting for the compiler download to complete
+wait
+tar -cf- gki | zstd -3 -T0 -o gki.tar.zst
+
+fi
+
+pushd gki
+
 pushd common
 
 # Pretend version
@@ -74,15 +84,7 @@ curl -fsSL "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.s
 
 # Setup Re:Kernel
 $REPO_DIR/rekernel.sh
-popd # gki
 
-# Waiting for the compiler download to complete
-wait
-tar -cf- gki | zstd -3 -T0 -o gki.tar.zst
-
-fi
-
-pushd gki
 # Setup custom defconfig
 cp $REPO_DIR/gki_defconfig common/arch/arm64/configs/gki_defconfig
 
